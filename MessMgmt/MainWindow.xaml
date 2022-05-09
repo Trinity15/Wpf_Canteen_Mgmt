@@ -5,13 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessMgmt"
         mc:Ignorable="d"
-        Title="MessManagment" Background="White"  Height="450" Width="800">
+        Title="CanteenMgmt" Background="White"  Height="520" Width="1000"
+        Loaded="Window_Loaded">
 
+
+    <Window.Resources>
+        <!--<local:Int2String x:Key="int2txt" />
+        <local:String2ImagePath x:Key="str2Img" />-->
+        <local:Int2MealType x:Key="int2MealType" />
+        <local:DateTimeToDateOnlyString x:Key="date2string" />
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -19,27 +27,23 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Name="BtnUnselectCustomer" Click="BtnUnselectCustomer_Click" Header="Customers" Height="22" />
-            <MenuItem Name="Btnmenu" Click="Btnmenu_Click" Header="Menu" />
-            <MenuItem Name="BtnAnnouncement" Click="BtnAnnouncement_Click" Header="Announcements" />
+            <MenuItem Name="BtnselectCustomer"  Header="Customers" Height="22" Foreground="DarkRed" />
+            <MenuItem Name="Btnmenu" Header="Menu" Foreground="DarkRed" />
+            <!--<MenuItem Name="BtnAnnouncement" Header="Announcements" />-->
         </Menu>
-        <DockPanel Grid.Row="1" >
-            <TextBlock Margin="10,0,0,0" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Customer Information" />
+        <DockPanel Grid.Row="1" Style="{StaticResource StyleTitleWindow}" Background="DarkRed">
+            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Manage Customers" />
+            <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
-        <Image Margin="440,0,0,0" HorizontalAlignment="Left" Source="/Images/app_icon.png"  Grid.Column="1" Grid.Row="1"  />
 
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="47*"/>
-                <ColumnDefinition Width="28*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="66" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <StackPanel Margin="10,0,10,0" VerticalAlignment="Center" Orientation="Vertical" Grid.ColumnSpan="2">
-                <TextBlock Padding="4,2,0,0" Width="auto" Text="Filter by full name" />
+            <StackPanel Margin="8" VerticalAlignment="Center" Grid.Row="0" Orientation="Vertical">
+                <TextBlock Padding="4,0,0,0" Foreground="DarkRed" Style="{StaticResource Label}" Width="auto" Text="Filter by full name" />
                 <TextBox FontSize="18" Name="TbxFilter" Width="auto" TextChanged="TbxFilter_TextChanged">
                     <TextBox.Resources>
                         <Style TargetType="Border">
@@ -48,8 +52,287 @@
                     </TextBox.Resources>
                 </TextBox>
             </StackPanel>
+
+            <!-- List of Customers -->
+            <Border BorderBrush="#ddd" BorderThickness="0,1,1,1" Grid.Row="1">
+                <ListBox BorderThickness="0" SelectionChanged="LBxCustomers_Selected" SelectionMode="Extended" Name="LBxCustomers" Height="307" VerticalAlignment="Top" Margin="0,9,0,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,5">
+                                <Image Width="30" Height="30" Source="/Images/app_icon.png" />
+                                <StackPanel Margin="5,0,0,0">
+                                    <TextBlock>
+                                        <Run Text="{Binding FirstName}" Foreground="DarkRed"/>
+                                        <Run Text="{Binding LastName}" Foreground="DarkRed"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding EMailTel}" Foreground="DarkRed" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Add & Delete Buttons -->
+            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
+                <!--<Button Name="BtnNavigateDemo" Margin="10,0,0,0" Height="30" Width="70" Content="Go Demo" Click="BtnNavigateDemo_Click" />-->
+
+                <Button Style="{StaticResource Button}" Width="100px" Foreground="White" Background="DarkRed" Content="Add customer" Name="BtnAdd" Click="BtnAdd_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <!--  <Button Visibility="{x:Static local:App.IsDebug}" Style="{StaticResource Button}" Width="50px" Foreground="Blue" Content="Seed" Name="BtnSeed" Click="BtnSeed_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button> -->
+                <Button Style="{StaticResource Button}" Width="110px" Foreground="White" Background="DarkRed" Content="Remove customer" Name="BtnDeleteCustomer" Click="BtnDeleteCustomer_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+            </StackPanel>
+
         </Grid>
 
+        <!-- Customer Add Details -->
+
+
+        <Grid Name="GrdCustomers"  Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="66" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="10,0,10,12" FontSize="14" VerticalAlignment="Bottom" Text="Customer Details" Foreground="DarkRed"/>
+            </StackPanel>
+
+            <!-- Customer Details Input -->
+
+            <StackPanel x:Name="Cmer_Input" DataContext="{Binding ElementName=LBxCustomers, Path=SelectedItem}" Grid.Row="0" Orientation="Horizontal" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="15,10,15,0" Orientation="Horizontal">
+                        <StackPanel Width="150" Orientation="Vertical">
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="First name" Style="{StaticResource Label}" Foreground="DarkRed"/>
+                                    <TextBox Width="120" Text="{Binding FirstName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="Last name" Style="{StaticResource Label}" Foreground="DarkRed" />
+                                    <TextBox Width="120" Text="{Binding LastName}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="40,0,0,0" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="E-Mail/Tel" Style="{StaticResource Label}" Foreground="DarkRed" />
+                                    <TextBox Width="150" Text="{Binding EMailTel}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="Address" Style="{StaticResource Label}"  Foreground="DarkRed"/>
+                                    <TextBox Width="150" Text="{Binding Address}"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <!--Order Details-->
+
+
+            <Border BorderBrush="#ddd" BorderThickness="0,1,0,0" Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="43" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="15,0,0,0" VerticalAlignment="Center" Grid.Row="0" FontSize="18" Text="Orders" />
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition>
+                                <ColumnDefinition.Style>
+                                    <Style TargetType="ColumnDefinition">
+                                        <Setter Property="Width" Value="*" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=LbxOrder, Path=SelectedItem}" Value="{x:Null}">
+                                                <Setter Property="Width" Value="0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ColumnDefinition.Style>
+                            </ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+
+            <Border BorderBrush="#ddd" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="1">
+                <ListBox BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxCustomers, Path=SelectedItem.Order }" Name="LbxOrder">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Background="DarkRed">
+                                <Image Width="30" Height="30" Source="/Images/app_icon.png" />
+                                <StackPanel Width="auto" Orientation="Vertical" Margin="10,0,0,0">
+                                    <TextBlock  Foreground="White" Text="{Binding MealType, Converter={StaticResource int2MealType}}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="White">
+                                                        <Run Text="Created at: "  />
+                                                        <Run Text="{Binding CreatedAt}"/>
+                                                        <Run Text=", "/>
+                                        </TextBlock>
+                                        <TextBlock  Foreground="White">
+                                                        <Run Text="Start date:"/>
+                                                        <Run Text="{Binding StartDate, Converter={StaticResource date2string}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Orders Details -->
+            <Border BorderThickness="0,1,0,0" Grid.Column="1">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="43" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" x:Name="DPOrderDetails">
+                        <TextBlock FontSize="16" Margin="10,0" Foreground="DarkRed" Text="Order details" Width="91" />
+                        <Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}">
+                            <Image Source="/Images/popup.png" />
+                        </Button>
+                    </DockPanel>
+                    <Border BorderBrush="#ddd" BorderThickness="0,1,0,0" Grid.Row="1" Grid.Column="1">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="357,36,2,-317" RenderTransformOrigin="0.5,0.5">
+                            <ScrollViewer.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ScrollViewer.RenderTransform>
+                            <StackPanel Margin="10,10,0,10" DataContext="{Binding ElementName=LbxOrder, Path=SelectedItem}">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=LbxOrder, Path=SelectedItem}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
+                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" />
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Price" Style="{StaticResource Label}" />
+                                    <TextBox Foreground="DarkRed"  Width="50" Text="{Binding Price}" />
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Payment Status" Style="{StaticResource Label}" />
+                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding PaymentStatus}"/>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Vegetariam" Style="{StaticResource Label}" />
+                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
+                                </StackPanel>
+
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Text="Start date" Foreground="DarkRed" Style="{StaticResource Label}" />
+                                    <DatePicker Width="150" Name="DaPiStartDate" SelectedDateChanged="DaPiStart_SelectedDateChanged" SelectedDate="{Binding StartDate}">
+                                        <DatePicker.Resources>
+                                            <Style TargetType="DatePickerTextBox">
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBox
+                                                              Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd/MM/yyyy},RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DatePicker.Resources>
+                                    </DatePicker>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Text="End date" Foreground="DarkRed" Style="{StaticResource Label}" />
+                                    <DatePicker Width="150" Name="DaPiEndDate" SelectedDateChanged="DaPiEndDate_SelectedDateChanged" SelectedDate="{Binding EndDate}">
+                                        <DatePicker.Resources>
+                                            <Style TargetType="DatePickerTextBox">
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBox
+                                                              Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd/MM/yyyy},RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DatePicker.Resources>
+                                    </DatePicker>
+                                </StackPanel>
+
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Border>
+
+
+
+            <Border BorderBrush="#ddd" BorderThickness="0,1,0,0" Grid.Row="2">
+                <DockPanel Margin="5,0,0,0">
+                    <Button Style="{StaticResource Button}" Width="80px" Foreground="White" Background="DarkRed" Content="Add order" Name="BtnAddOrder" Click="BtnAddOrder_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Style="{StaticResource Button}" Width="90px" Foreground="White" Background="DarkRed" Content="Remove order" Name="BtnDeleteOrder" Click="BtnDeleteOrder_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button HorizontalAlignment="Right" Style="{StaticResource Button}" Content="Close order details" Width="120">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </DockPanel>
+            </Border>
+        </Grid>
 
     </Grid>
 </Window>

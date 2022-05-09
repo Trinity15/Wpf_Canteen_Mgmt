@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MessMgmt;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -13,5 +15,7 @@ namespace MessMgmt
     /// </summary>
     public partial class App : Application
     {
+
+        public static ObservableCollection<Customer> _state = new();
     }
 }
