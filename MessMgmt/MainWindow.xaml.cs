@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace MessMgmt
 {
@@ -165,12 +166,28 @@ namespace MessMgmt
             }
         }
 
+        private void BtnselectCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void BtnUnselectOrder_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void DaPiEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Btnmenu_Click(object sender, RoutedEventArgs e)
+        {
+            Menu win = new Menu();
+            win.Show();
+        }
+
+        private void Btndelivery_Click(object sender, RoutedEventArgs e)
         {
 
         }

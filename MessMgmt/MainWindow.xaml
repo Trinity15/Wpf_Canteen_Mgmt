@@ -26,16 +26,20 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
+        <!-- Menu -->
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Name="BtnselectCustomer"  Header="Customers" Height="22" Foreground="DarkRed" />
-            <MenuItem Name="Btnmenu" Header="Menu" Foreground="DarkRed" />
+            <MenuItem Name="Btnmenu" Header="Menu" Foreground="DarkRed" Click="Btnmenu_Click" />
+            <MenuItem Name="Btndelivery"  Header="Delivery" Height="22" Foreground="DarkRed" Click="Btndelivery_Click"  />
             <!--<MenuItem Name="BtnAnnouncement" Header="Announcements" />-->
         </Menu>
+        <!-- Header -->
         <DockPanel Grid.Row="1" Style="{StaticResource StyleTitleWindow}" Background="DarkRed">
             <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Manage Customers" />
             <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
 
+        <!-- Filter By name -->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="66" />
@@ -59,7 +63,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5,0,0,5">
-                                <Image Width="30" Height="30" Source="/Images/app_icon.png" />
+                                <Image Width="30" Height="30" Source="/Images/user.png" />
                                 <StackPanel Margin="5,0,0,0">
                                     <TextBlock>
                                         <Run Text="{Binding FirstName}" Foreground="DarkRed"/>
@@ -159,7 +163,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="15,0,0,0" VerticalAlignment="Center" Grid.Row="0" FontSize="18" Text="Orders" />
+
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -182,8 +186,8 @@
 
 
 
-            <Border BorderBrush="#ddd" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="1">
-                <ListBox BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxCustomers, Path=SelectedItem.Order }" Name="LbxOrder">
+            <Border BorderBrush="#ddd" BorderThickness="0,1,1,0" Grid.Row="1" Margin="0,44,0,0">
+                <ListBox BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxCustomers, Path=SelectedItem.Order }" Name="LbxOrder" Height="308" VerticalAlignment="Top" Margin="0,9,0,0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Background="DarkRed">
@@ -211,18 +215,22 @@
             <!-- Orders Details -->
             <Border BorderThickness="0,1,0,0" Grid.Column="1">
                 <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="158*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="43" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" x:Name="DPOrderDetails">
+                    <DockPanel Grid.Row="1" x:Name="DPOrderDetails" Grid.ColumnSpan="2" Margin="0,27,0,-38">
                         <TextBlock FontSize="16" Margin="10,0" Foreground="DarkRed" Text="Order details" Width="91" />
                         <Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}">
                             <Image Source="/Images/popup.png" />
                         </Button>
                     </DockPanel>
-                    <Border BorderBrush="#ddd" BorderThickness="0,1,0,0" Grid.Row="1" Grid.Column="1">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="357,36,2,-317" RenderTransformOrigin="0.5,0.5">
+                    <Border BorderBrush="#ddd"  Grid.Row="1" Grid.ColumnSpan="2">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="359,61,0,-322" RenderTransformOrigin="0.5,0.5">
                             <ScrollViewer.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleY="1"/>
@@ -257,7 +265,7 @@
                                 </StackPanel>
 
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
-                                    <TextBlock Foreground="DarkRed" Text="Vegetariam" Style="{StaticResource Label}" />
+                                    <TextBlock Foreground="DarkRed" Text="Vegetarian" Style="{StaticResource Label}" />
                                     <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
                                 </StackPanel>
 

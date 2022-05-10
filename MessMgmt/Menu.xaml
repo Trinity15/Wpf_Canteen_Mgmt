@@ -1,0 +1,68 @@
+﻿<Window x:Class="MessMgmt.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MessMgmt"
+        mc:Ignorable="d"
+        Title="Menu" Height="450" Width="800">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
+            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Menu" />
+            <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
+        </DockPanel>
+
+         <Border BorderBrush="#ddd" BorderThickness="0,1,1,1" Grid.Row="3">
+                <ListBox BorderThickness="0" SelectionChanged="LBxMenu_Selected" SelectionMode="Extended" Name="LBxMenu" Height="265" VerticalAlignment="Top" Margin="0,9,0,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,5">
+                                <Image Width="30" Height="30" Source="/Images/meal.png" />
+                                <StackPanel Margin="5,0,0,0">
+                                    <TextBlock>
+                                        <Run Text="{Binding FirstName}" Foreground="DarkRed"/>
+                                        <Run Text="{Binding LastName}" Foreground="DarkRed"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding EMailTel}" Foreground="DarkRed" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
+            <Button Style="{StaticResource Button}" Width="100px" Foreground="White" Background="DarkRed" Content="Add menu" Name="BtnAdd" Click="BtnAdd_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Style="{StaticResource Button}" Width="110px" Foreground="White" Background="DarkRed" Content="Remove menu" Name="BtnDeleteMenu" Click="BtnDeleteMenu_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+
+
+
+
+
+    </Grid>
+</Window>
