@@ -251,12 +251,7 @@
                                 </StackPanel.Style>
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
                                     <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
-                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" />
-                                </StackPanel>
-
-                                <StackPanel Margin="0,5" Orientation="Horizontal">
-                                    <TextBlock Foreground="DarkRed" Text="Price" Style="{StaticResource Label}" />
-                                    <TextBox Foreground="DarkRed"  Width="50" Text="{Binding Price}" />
+                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" SelectionChanged="calcPrice" />
                                 </StackPanel>
 
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
@@ -305,7 +300,11 @@
                                         </DatePicker.Resources>
                                     </DatePicker>
                                 </StackPanel>
-
+                               
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Price" Style="{StaticResource Label}" />
+                                    <TextBox Foreground="DarkRed" x:Name="PriceTB" Width="50" Text="{Binding Price}" />
+                                </StackPanel>
 
                             </StackPanel>
                         </ScrollViewer>

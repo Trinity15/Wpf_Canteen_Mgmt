@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Navigation;
 
 namespace MessMgmt
@@ -190,6 +193,48 @@ namespace MessMgmt
         private void Btndelivery_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void calcPrice(object sender, SelectionChangedEventArgs e)
+        {
+            if (LbxOrder.SelectedItem != null)
+            {
+                var selectedCustomer = LBxCustomers.SelectedItem as Customer;
+                var index = LbxOrder.SelectedIndex;
+
+                switch (CbxMealType.SelectedIndex)
+                {
+                    case 0:
+                        selectedCustomer.Order.ElementAt(index).Price = 100;
+                        break;
+                    case 1:
+                        selectedCustomer.Order.ElementAt(index).Price = 200;
+                        break;
+                    case 2:
+                        selectedCustomer.Order.ElementAt(index).Price = 300;
+                        break;
+                    case 3:
+                        selectedCustomer.Order.ElementAt(index).Price = 400;
+                        break;
+                    case 4:
+                        selectedCustomer.Order.ElementAt(index).Price = 500;
+                        break;
+                    case 5:
+                        selectedCustomer.Order.ElementAt(index).Price = 600;
+                        break;
+                    case 6:
+                        selectedCustomer.Order.ElementAt(index).Price = 700;
+                        break;
+                    default:
+                        selectedCustomer.Order.ElementAt(index).Price = 0;
+                        break;
+                }
+
+                
+
+                //PriceTB.SetValue(price, newp);
+                PriceTB.Text = selectedCustomer.Order.ElementAt(index).Price.ToString();
+            }
         }
     }
 }
