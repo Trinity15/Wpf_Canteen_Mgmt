@@ -202,37 +202,40 @@ namespace MessMgmt
                 var selectedCustomer = LBxCustomers.SelectedItem as Customer;
                 var index = LbxOrder.SelectedIndex;
 
+                uint days = (uint)(selectedCustomer.Order.ElementAt(index).EndDate - selectedCustomer.Order.ElementAt(index).StartDate).TotalDays;
+
+                var price = selectedCustomer.Order.ElementAt(index).Price;
+
                 switch (CbxMealType.SelectedIndex)
                 {
                     case 0:
-                        selectedCustomer.Order.ElementAt(index).Price = 100;
+                        price = 20 * days;
                         break;
                     case 1:
-                        selectedCustomer.Order.ElementAt(index).Price = 200;
+                        price = 20 * days;
                         break;
                     case 2:
-                        selectedCustomer.Order.ElementAt(index).Price = 300;
+                        price = 20 * days;
                         break;
                     case 3:
-                        selectedCustomer.Order.ElementAt(index).Price = 400;
+                        price = 60 * days;
                         break;
                     case 4:
-                        selectedCustomer.Order.ElementAt(index).Price = 500;
+                        price = 40 * days;
                         break;
                     case 5:
-                        selectedCustomer.Order.ElementAt(index).Price = 600;
+                        price = 40 * days;
                         break;
                     case 6:
-                        selectedCustomer.Order.ElementAt(index).Price = 700;
+                        price = 40 * days;
                         break;
                     default:
-                        selectedCustomer.Order.ElementAt(index).Price = 0;
+                        price = 0;
                         break;
                 }
 
-                
+                selectedCustomer.Order.ElementAt(index).Price = price;
 
-                //PriceTB.SetValue(price, newp);
                 PriceTB.Text = selectedCustomer.Order.ElementAt(index).Price.ToString();
             }
         }
