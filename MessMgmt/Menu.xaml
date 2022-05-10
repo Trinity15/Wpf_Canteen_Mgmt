@@ -6,9 +6,17 @@
         xmlns:local="clr-namespace:MessMgmt"
         mc:Ignorable="d"
         Title="Menu" Height="450" Width="800">
+   
+    <Window.Resources>
+        <!--<local:Int2String x:Key="int2txt" />
+        <local:String2ImagePath x:Key="str2Img" />-->
+        <local:Int2MealType x:Key="int2MealType" />
+        <local:DateTimeToDateOnlyString x:Key="date2string" />
+    </Window.Resources>
+    
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="280" />
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -32,11 +40,13 @@
                                 <Image Width="30" Height="30" Source="/Images/meal.png" />
                                 <StackPanel Margin="5,0,0,0">
                                     <TextBlock>
-                                        <Run Text="{Binding FirstName}" Foreground="DarkRed"/>
-                                        <Run Text="{Binding LastName}" Foreground="DarkRed"/>
+                                        <Run Text="{Binding MealType}" Foreground="DarkRed"/>
+                                        <Run Text="{Binding CreatedAt}" Foreground="DarkRed"/>
                                     </TextBlock>
-                                    <TextBlock Text="{Binding EMailTel}" Foreground="DarkRed" />
-                                </StackPanel>
+                                <!--<TextBlock>
+                                <Run Text="{Binding PreparedDate={StaticResource date2string}}"/>
+                                </TextBlock>-->
+                            </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -60,9 +70,16 @@
         </StackPanel>
 
 
+<!--Menu Input -->
+        <Grid Name="GrdCustomers"  Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
 
+            
 
-
-
+        </Grid>
     </Grid>
 </Window>

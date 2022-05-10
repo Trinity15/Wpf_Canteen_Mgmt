@@ -12,7 +12,7 @@ namespace MessMgmt
         public DateTime PreparedDate { get; set; } = DateTime.Now;
         public uint MealType { get; set; } = 0;
         public string CreatedAt { get; set; } = DateTime.Now.ToString("dd'/'MM'/'yyyy");
-        public uint Veg { get; set; } = 0;
+        public bool Veg { get; set; } = false;
         public string DishName { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
 
