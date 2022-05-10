@@ -15,8 +15,5 @@ namespace MessMgmt
         public bool Veg { get; set; } = false;
         public string DishName { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
-
-
-
     }
 }
