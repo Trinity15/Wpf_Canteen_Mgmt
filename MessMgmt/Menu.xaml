@@ -26,25 +26,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-    
-    <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
+
+        <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
             <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="20" VerticalAlignment="Center" Text="Menu Details" />
+            <Button Name="BtnToMenuDetails" Click="BtnToMenuDetails_Click" ToolTip="Click to popout order details into a new window." Width="31" Height="20" Style="{StaticResource IconButtonStyle}" RenderTransformOrigin="-1.727,0.585">
+                <Image Source="/Images/popup.png" />
+            </Button>
             <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
-        
+
         <!--Filteration-->
 
         <StackPanel Margin="8" VerticalAlignment="Center" Grid.Row="2" Orientation="Vertical">
-                <TextBlock Margin="0,0,0,-4" Foreground="DarkRed" Style="{StaticResource Label}" Width="auto" Text="Filter by Date" />
+            <TextBlock Margin="0,0,0,-4" Foreground="DarkRed" Style="{StaticResource Label}" Width="auto" Text="Filter by Preparing Date" />
             <TextBox Margin="0,0,0,2" FontSize="12" Name="TbxFilter" Width="auto" TextChanged="TbxFilter_TextChanged" Height="20">
-                    <TextBox.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="6"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-            </StackPanel>
-      
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </StackPanel>
+
 
 
         <Border BorderBrush="LightGray" BorderThickness="0,1,1,1" Grid.Row="3">
@@ -116,8 +119,8 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-       
-       
+
+
 
         <!--Dishes-->
 
@@ -141,14 +144,11 @@
 
         <!--Dockpanel for Dish-->
         <DockPanel Grid.Row="2" x:Name="DPOrderDetails" Grid.Column="2">
-            <TextBlock FontSize="16"  Foreground="DarkRed" Text=" Manage Dishes " Margin="10,10,10,10" HorizontalAlignment="Center" />
-            <!--<Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}">
-                <Image Source="/Images/popup.png" />
-            </Button>-->
-        </DockPanel>
+            <TextBlock FontSize="16"  Foreground="DarkRed" Text=" Manage Dishes " Margin="20,10,10,10" HorizontalAlignment="Center"  />
+           </DockPanel>
         <Border BorderBrush="LightGray" BorderThickness="0,1,1,0" Grid.Row="3" Grid.Column="1" >
 
-            
+
             <ListBox Grid.Row="3" BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxMenu, Path=SelectedItem.Dish }" Name="LbxDish" Height="264" VerticalAlignment="Top" Margin="0,9,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -205,7 +205,7 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                 <StackPanel Margin="0,5" Orientation="Horizontal">
+                <StackPanel Margin="0,5" Orientation="Horizontal">
                     <TextBlock Foreground="DarkRed" Text="Dish" Style="{StaticResource Label}" />
                     <TextBox Foreground="DarkRed"  Width="150" Text="{Binding DishName}" />
                 </StackPanel>

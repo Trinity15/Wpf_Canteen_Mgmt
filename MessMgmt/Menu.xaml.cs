@@ -69,7 +69,7 @@ namespace MessMgmt
             if (res == MessageBoxResult.Yes)
             {
                 m1.ForEach((m1) => App._menu.Remove(m1));
-               /* LBxCustomers.ItemsSource = filteredCustomers(TbxFilter.Text)*/;
+               
             }
 
         }
@@ -126,26 +126,31 @@ namespace MessMgmt
             {
                 d1.ForEach((Dish) => selectedMenu.Dish.Remove(Dish));
 
-                //var d2 = selectedMenu.d1.FirstOrDefault();
-                //LbxRepairs.SelectedItem = lastRepair;
-                //LbxRepairs.ScrollIntoView(lastRepair);
+               
+            }
+        }
+//FilterbyDate
+        private IEnumerable<MenuItems> filteredMenu(string filterInput) => from m in App._menu where m.PreparedDate.ToString("dd'/'MM'/'yyyy").Contains(filterInput) orderby m.CreatedAt.IndexOf(filterInput) select m;
+        private void TbxFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var filter = TbxFilter.Text.ToLower();
+            if (filter == "")
+            {
+                LBxMenu.ItemsSource = App._menu;
+            }
+            else
+            {
+                var list = filteredMenu(filter);
+
+                LBxMenu.ItemsSource = list.ToList();
             }
         }
 
-       
-        private void TbxFilter_TextChanged(object sender, TextChangedEventArgs e)
+        private void BtnToMenuDetails_Click(object sender, RoutedEventArgs e)
         {
-            //var filter = TbxFilter.Text.ToLower();
-            //if (filter == "")
-            //{
-            //    LBxMenu.ItemsSource = App._state;
-            //}
-            //{
-            //    var list = filteredMenu(filter);
-
-            //else
-            //    LBxMenu.ItemsSource = list.ToList();
-            //}
+            App.Overview_Menu = new Overview_Menu { DataContext = App.refreshMenu() };
+            App.Overview_Menu.Owner = this;
+            App.Overview_Menu.Show();
         }
     }
     }

@@ -29,7 +29,7 @@
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem Name="Btnmenu" Header="Menu" Foreground="DarkRed" Click="Btnmenu_Click" />
             <MenuItem Name="Btndelivery"  Header="Delivery" Height="22" Foreground="DarkRed" Click="Btndelivery_Click"  />
-            <!--<MenuItem Name="BtnAnnouncement" Header="Announcements" />-->
+            
         </Menu>
         <!-- Header -->
         <DockPanel Grid.Row="1" Style="{StaticResource StyleTitleWindow}" Background="DarkRed">

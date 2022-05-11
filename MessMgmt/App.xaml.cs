@@ -20,6 +20,7 @@ namespace MessMgmt
         public static ObservableCollection<Customer> _state = new();
         public static ObservableCollection<MenuItems> _menu = new();
         public static Delivery? Delivery;
+        public static Overview_Menu? Overview_Menu;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -32,6 +33,7 @@ namespace MessMgmt
             if (_menu == null) _menu = new ObservableCollection<MenuItems>();
 
             refreshDelivery();
+            refreshMenu();
         }
 
         public static ObservableCollection<object> refreshDelivery()
@@ -52,6 +54,21 @@ namespace MessMgmt
             return new ObservableCollection<object>(delivery);
         }
 
+        public static ObservableCollection<object> refreshMenu()
+        {
+            var menu = _menu.ToList().ToImmutableList();
+            var overview = menu.Select(menu => menu.Dish.Select(dish => new {
+                DishName = dish.DishName,
+                Description = dish.Description ,
+                PreparedDate = menu.PreparedDate,
+                MealType = menu.MealType,
+                Veg = dish.Veg
+            }))
+                .SelectMany(i => i)
+                .OrderBy(item => item.PreparedDate);
+
+            return new ObservableCollection<object>(overview);
+        }
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             Storage.WriteXml(_state, "AppState.xml");
