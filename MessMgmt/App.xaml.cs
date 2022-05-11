@@ -16,6 +16,7 @@ namespace MessMgmt
     public partial class App : Application
     {
         public static ObservableCollection<Customer> _state = new();
+        public static ObservableCollection<MenuItems> _menu = new();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {

@@ -192,10 +192,12 @@ namespace MessMgmt
 
         private void Btndelivery_Click(object sender, RoutedEventArgs e)
         {
+            Delivery win = new Delivery();
+            win.Show();
 
         }
 
-        private void calcPrice(object sender, SelectionChangedEventArgs e)
+        private void CalcPrice(object sender, SelectionChangedEventArgs e)
         {
             if (LbxOrder.SelectedItem != null)
             {
@@ -238,6 +240,16 @@ namespace MessMgmt
 
                 PriceTB.Text = selectedCustomer.Order.ElementAt(index).Price.ToString();
             }
+        }
+
+        private void BtnCloseOrder(object sender, RoutedEventArgs e)
+        {
+            LbxOrder.SelectedItem = null;
+        }
+
+        private void LbxOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

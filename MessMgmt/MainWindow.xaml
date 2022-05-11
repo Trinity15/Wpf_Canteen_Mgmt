@@ -187,7 +187,7 @@
 
 
             <Border BorderBrush="#ddd" BorderThickness="0,1,1,0" Grid.Row="1" Margin="0,44,0,0">
-                <ListBox BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxCustomers, Path=SelectedItem.Order }" Name="LbxOrder" Height="308" VerticalAlignment="Top" Margin="0,9,0,0">
+                <ListBox BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxCustomers, Path=SelectedItem.Order }" x:Name="LbxOrder" Height="308" VerticalAlignment="Top" Margin="0,9,0,0" SelectionChanged="LbxOrder_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Background="DarkRed">
@@ -251,7 +251,7 @@
                                 </StackPanel.Style>
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
                                     <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
-                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" SelectionChanged="calcPrice" />
+                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" SelectionChanged="CalcPrice" />
                                 </StackPanel>
 
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
@@ -301,7 +301,7 @@
                                     </DatePicker>
                                 </StackPanel>
                                
-                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                  <StackPanel Margin="0,5" Orientation="Horizontal">
                                     <TextBlock Foreground="DarkRed" Text="Price" Style="{StaticResource Label}" />
                                     <TextBox Foreground="DarkRed" x:Name="PriceTB" Width="50" Text="{Binding Price}" />
                                 </StackPanel>
@@ -330,7 +330,7 @@
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button HorizontalAlignment="Right" Style="{StaticResource Button}" Content="Close order details" Width="120">
+                    <Button HorizontalAlignment="Right" Style="{StaticResource Button}" Content="Close order details" Width="120" Click="BtnCloseOrder">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="12"/>

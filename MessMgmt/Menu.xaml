@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessMgmt"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="800">
-   
+        Title="Menu" Height="450" Width="800"
+        Loaded="Window_Loaded">
+
     <Window.Resources>
         <!--<local:Int2String x:Key="int2txt" />
         <local:String2ImagePath x:Key="str2Img" />-->
         <local:Int2MealType x:Key="int2MealType" />
         <local:DateTimeToDateOnlyString x:Key="date2string" />
     </Window.Resources>
-    
-    <Grid ShowGridLines="True">
+
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" />
             <ColumnDefinition Width="*"/>
@@ -28,30 +29,33 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
-            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Menu" />
+            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Menu Details" />
             <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
 
-         <Border BorderBrush="#ddd" BorderThickness="0,1,1,1" Grid.Row="3">
-                <ListBox BorderThickness="0" SelectionChanged="LBxMenu_Selected" SelectionMode="Extended" Name="LBxMenu" Height="265" VerticalAlignment="Top" Margin="0,9,0,0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5,0,0,5">
-                                <Image Width="30" Height="30" Source="/Images/meal.png" />
-                                <StackPanel Margin="5,0,0,0">
-                                    <TextBlock>
-                                        <Run Text="{Binding MealType}" Foreground="DarkRed"/>
+        <Border BorderBrush="DarkRed" BorderThickness="0,1,1,1" Grid.Row="3">
+            <ListBox BorderThickness="0" SelectionChanged="LBxMenu_Selected" SelectionMode="Extended" Name="LBxMenu" Height="265" VerticalAlignment="Top" Margin="0,9,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,5">
+                            <Image Width="30" Height="30" Source="/Images/meal.png" />
+                            <StackPanel Margin="5,0,0,0">
+                                <TextBlock>
+                                        <Run Text="{Binding MealType, Converter={StaticResource int2MealType}}" Foreground="DarkRed"/>
+                                         <Run Text="Created at: "  />
                                         <Run Text="{Binding CreatedAt}" Foreground="DarkRed"/>
-                                    </TextBlock>
-                                <!--<TextBlock>
-                                <Run Text="{Binding PreparedDate={StaticResource date2string}}"/>
-                                </TextBlock>-->
+                                </TextBlock>
+                                <TextBlock>
+                                <Run Text="Prepared on: "  />
+                                <Run Text="{Binding PreparedDate, Converter={StaticResource date2string}}"/>
+                                </TextBlock>
                             </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+        <!--Buttons-->
         <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
             <Button Style="{StaticResource Button}" Width="100px" Foreground="White" Background="DarkRed" Content="Add menu" Name="BtnAdd" Click="BtnAdd_Click">
                 <Button.Resources>
@@ -70,16 +74,129 @@
         </StackPanel>
 
 
-<!--Menu Input -->
-        <Grid Name="GrdCustomers"  Grid.Row="2" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
+        <!--Menu Input -->
+        <Grid Name="GrdMenu"  Grid.Row="2" Grid.Column="1">
+            <StackPanel Orientation="Vertical" x:Name="menu_Input" DataContext="{Binding ElementName=LBxMenu, Path=SelectedItem}" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Prepared Date" Foreground="DarkRed" Style="{StaticResource Label}" />
+                    <DatePicker Width="150" Name="DaPiPreparedDate" SelectedDateChanged="DaPreparedDate_SelectedDateChanged" SelectedDate="{Binding PreparedDate}">
+                        <DatePicker.Resources>
+                            <Style TargetType="DatePickerTextBox">
+                                <Setter Property="Control.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <TextBox
+                                   Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd/MM/yyyy},RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal" >
+                    <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
+                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+       
+       
+        <!--Dishes-->
+
+        <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition>
+                    <ColumnDefinition.Style>
+                        <Style TargetType="ColumnDefinition">
+                            <Setter Property="Width" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=LbxDish, Path=SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="Width" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ColumnDefinition.Style>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        
+        <Border BorderBrush="DarkRed" BorderThickness="0,1,1,0" Grid.Row="3" Grid.Column="1" >
 
             
+            <ListBox Grid.Row="3" BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxMenu, Path=SelectedItem.Dish }" Name="LbxDish" Height="264" VerticalAlignment="Top" Margin="0,9,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="30" Height="30" Source="/Images/dish.png" Margin="5,0" />
+                            <StackPanel  Orientation="Vertical" >
+                                <TextBlock Foreground="DarkRed">
+                                                        <Run Text="Dish: "  />
+                                                        <Run Text="{Binding DishName}"/>
 
-        </Grid>
+                                </TextBlock>
+                                <TextBlock  Foreground="DarkRed">
+                                                        <Run Text="Description:"/>
+                                                        <Run Text="{Binding Description}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+        <!--Dishes Button-->
+        <Border BorderBrush="DarkRed" BorderThickness="0,1,0,0" Grid.Row="4" Grid.Column="1"  >
+            <DockPanel Margin="5,0,0,0">
+                <Button Style="{StaticResource Button}" Width="80px" Foreground="White" Background="DarkRed" Content="Add dish" Name="BtnAddDish" Click="BtnAddDish_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Style="{StaticResource Button}" Width="90px" Foreground="White" Background="DarkRed" Content="Delete dish" Name="BtnDeletDish" Click="BtnDeletDish_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+            </DockPanel>
+        </Border>
+
+        <!--Dishes input-->
+        <Border BorderBrush="DarkRed"  Grid.Row="3" Grid.Column="2" >
+
+
+            <StackPanel Margin="10,10,0,10" DataContext="{Binding ElementName=LbxDish, Path=SelectedItem}">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=LbxDish, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                 <StackPanel Margin="0,5" Orientation="Horizontal">
+                    <TextBlock Foreground="DarkRed" Text="Dish" Style="{StaticResource Label}" />
+                    <TextBox Foreground="DarkRed"  Width="50" Text="{Binding DishName}" />
+                </StackPanel>
+                <StackPanel Margin="0,5" Orientation="Horizontal">
+                    <TextBlock Foreground="DarkRed" Text="Description" Style="{StaticResource Label}" />
+                    <TextBox Foreground="DarkRed"  Width="100" Text="{Binding Description}" />
+                </StackPanel>
+                <StackPanel Margin="0,5" Orientation="Horizontal">
+                    <TextBlock Foreground="DarkRed" Text="Vegetarian" Style="{StaticResource Label}" />
+                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Border>
+
+        <!-- End -->
     </Grid>
 </Window>
