@@ -22,6 +22,16 @@ namespace MessMgmt
         public Delivery()
         {
             InitializeComponent();
+            
+        }
+        public void refreshIcItemsSource()
+        {
+            IcDelivery.ItemsSource = App.refreshDelivery();
         }
     }
+
+
+
 }
+
+

@@ -10,8 +10,6 @@
 
 
     <Window.Resources>
-        <!--<local:Int2String x:Key="int2txt" />
-        <local:String2ImagePath x:Key="str2Img" />-->
         <local:Int2MealType x:Key="int2MealType" />
         <local:DateTimeToDateOnlyString x:Key="date2string" />
     </Window.Resources>

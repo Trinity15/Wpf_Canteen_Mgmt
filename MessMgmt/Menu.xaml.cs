@@ -131,6 +131,22 @@ namespace MessMgmt
                 //LbxRepairs.ScrollIntoView(lastRepair);
             }
         }
+
+       
+        private void TbxFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //var filter = TbxFilter.Text.ToLower();
+            //if (filter == "")
+            //{
+            //    LBxMenu.ItemsSource = App._state;
+            //}
+            //{
+            //    var list = filteredMenu(filter);
+
+            //else
+            //    LBxMenu.ItemsSource = list.ToList();
+            //}
+        }
     }
     }
 

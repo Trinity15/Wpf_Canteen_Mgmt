@@ -25,7 +25,7 @@ namespace MessMgmt
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LBxCustomers.ItemsSource = App._state;
-            //Customer_Input.Visibility = Visibility.Hidden;
+           
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -151,7 +151,7 @@ namespace MessMgmt
                 deleteMessageBox();
                 return;
             }
-            //$"Are you sure you want to remove \"{ConvertIntToBicycle(repairs.FirstOrDefault().BicycleCategory)}\" from the repairs-list of {(LBxCustomers.SelectedItem as Customer).FullName}?",
+            
             var res = MessageBox.Show(
                 $"Are you sure you want to remove ?",
                 "Warning",
@@ -161,11 +161,9 @@ namespace MessMgmt
 
             if (res == MessageBoxResult.Yes)
             {
-                orders.ForEach((repair) => selectedCustomer.Order.Remove(repair));
+                orders.ForEach((order) => selectedCustomer.Order.Remove(order));
 
-                var lastRepair = selectedCustomer.Order.FirstOrDefault();
-                //LbxRepairs.SelectedItem = lastRepair;
-                //LbxRepairs.ScrollIntoView(lastRepair);
+               
             }
         }
 
@@ -192,8 +190,12 @@ namespace MessMgmt
 
         private void Btndelivery_Click(object sender, RoutedEventArgs e)
         {
-            Delivery win = new Delivery();
-            win.Show();
+          
+            App.Delivery = new Delivery { DataContext = App.refreshDelivery() };
+            App.Delivery.Owner = this;
+            App.Delivery.Show();
+           
+
 
         }
 

@@ -5,12 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessMgmt"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="800"
+        Title="Menu" Height="450" Width="900"
         Loaded="Window_Loaded">
 
     <Window.Resources>
-        <!--<local:Int2String x:Key="int2txt" />
-        <local:String2ImagePath x:Key="str2Img" />-->
         <local:Int2MealType x:Key="int2MealType" />
         <local:DateTimeToDateOnlyString x:Key="date2string" />
     </Window.Resources>
@@ -28,12 +26,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
-            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Menu Details" />
+    
+    <DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StyleTitleWindow}" Background="DarkRed" Grid.ColumnSpan="3">
+            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="20" VerticalAlignment="Center" Text="Menu Details" />
             <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
+        
+        <!--Filteration-->
 
-        <Border BorderBrush="DarkRed" BorderThickness="0,1,1,1" Grid.Row="3">
+        <StackPanel Margin="8" VerticalAlignment="Center" Grid.Row="2" Orientation="Vertical">
+                <TextBlock Margin="0,0,0,-4" Foreground="DarkRed" Style="{StaticResource Label}" Width="auto" Text="Filter by Date" />
+            <TextBox Margin="0,0,0,2" FontSize="12" Name="TbxFilter" Width="auto" TextChanged="TbxFilter_TextChanged" Height="20">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+      
+
+
+        <Border BorderBrush="LightGray" BorderThickness="0,1,1,1" Grid.Row="3">
             <ListBox BorderThickness="0" SelectionChanged="LBxMenu_Selected" SelectionMode="Extended" Name="LBxMenu" Height="265" VerticalAlignment="Top" Margin="0,9,0,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -56,23 +70,25 @@
             </ListBox>
         </Border>
         <!--Buttons-->
-        <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
-            <Button Style="{StaticResource Button}" Width="100px" Foreground="White" Background="DarkRed" Content="Add menu" Name="BtnAdd" Click="BtnAdd_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="12"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button Style="{StaticResource Button}" Width="110px" Foreground="White" Background="DarkRed" Content="Remove menu" Name="BtnDeleteMenu" Click="BtnDeleteMenu_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="12"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </StackPanel>
 
+        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Grid.Row="4" Grid.Column="0"  >
+            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Grid.Row="4" Orientation="Horizontal" >
+                <Button Style="{StaticResource Button}" Width="100px" Foreground="White" Background="DarkRed" Content="Add menu" Name="BtnAdd" Click="BtnAdd_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Style="{StaticResource Button}" Width="110px" Foreground="White" Background="DarkRed" Content="Remove menu" Name="BtnDeleteMenu" Click="BtnDeleteMenu_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
 
         <!--Menu Input -->
         <Grid Name="GrdMenu"  Grid.Row="2" Grid.Column="1">
@@ -102,6 +118,7 @@
         </Grid>
        
        
+
         <!--Dishes-->
 
         <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="1">
@@ -121,8 +138,15 @@
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
         </Grid>
-        
-        <Border BorderBrush="DarkRed" BorderThickness="0,1,1,0" Grid.Row="3" Grid.Column="1" >
+
+        <!--Dockpanel for Dish-->
+        <DockPanel Grid.Row="2" x:Name="DPOrderDetails" Grid.Column="2">
+            <TextBlock FontSize="16"  Foreground="DarkRed" Text=" Manage Dishes " Margin="10,10,10,10" HorizontalAlignment="Center" />
+            <!--<Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}">
+                <Image Source="/Images/popup.png" />
+            </Button>-->
+        </DockPanel>
+        <Border BorderBrush="LightGray" BorderThickness="0,1,1,0" Grid.Row="3" Grid.Column="1" >
 
             
             <ListBox Grid.Row="3" BorderThickness="0" SelectionMode="Extended" ItemsSource="{Binding ElementName=LBxMenu, Path=SelectedItem.Dish }" Name="LbxDish" Height="264" VerticalAlignment="Top" Margin="0,9,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -147,7 +171,7 @@
             </ListBox>
         </Border>
         <!--Dishes Button-->
-        <Border BorderBrush="DarkRed" BorderThickness="0,1,0,0" Grid.Row="4" Grid.Column="1"  >
+        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Grid.Row="4" Grid.Column="1"  >
             <DockPanel Margin="5,0,0,0">
                 <Button Style="{StaticResource Button}" Width="80px" Foreground="White" Background="DarkRed" Content="Add dish" Name="BtnAddDish" Click="BtnAddDish_Click">
                     <Button.Resources>
@@ -168,7 +192,7 @@
         </Border>
 
         <!--Dishes input-->
-        <Border BorderBrush="DarkRed"  Grid.Row="3" Grid.Column="2" >
+        <Border BorderBrush="LightGray"  Grid.Row="3" Grid.Column="2" >
 
 
             <StackPanel Margin="10,10,0,10" DataContext="{Binding ElementName=LbxDish, Path=SelectedItem}">
@@ -183,15 +207,15 @@
                 </StackPanel.Style>
                  <StackPanel Margin="0,5" Orientation="Horizontal">
                     <TextBlock Foreground="DarkRed" Text="Dish" Style="{StaticResource Label}" />
-                    <TextBox Foreground="DarkRed"  Width="50" Text="{Binding DishName}" />
+                    <TextBox Foreground="DarkRed"  Width="150" Text="{Binding DishName}" />
                 </StackPanel>
                 <StackPanel Margin="0,5" Orientation="Horizontal">
                     <TextBlock Foreground="DarkRed" Text="Description" Style="{StaticResource Label}" />
-                    <TextBox Foreground="DarkRed"  Width="100" Text="{Binding Description}" />
+                    <TextBox Foreground="DarkRed" Height="170" Width="150" Text="{Binding Description}" />
                 </StackPanel>
                 <StackPanel Margin="0,5" Orientation="Horizontal">
                     <TextBlock Foreground="DarkRed" Text="Vegetarian" Style="{StaticResource Label}" />
-                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
+                    <CheckBox Foreground="DarkRed" Width="300" IsChecked="{Binding Veg}"/>
                 </StackPanel>
             </StackPanel>
 
