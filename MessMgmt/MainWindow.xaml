@@ -33,7 +33,7 @@
         </Menu>
         <!-- Header -->
         <DockPanel Grid.Row="1" Style="{StaticResource StyleTitleWindow}" Background="DarkRed">
-            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Manage Customers" />
+            <TextBlock Margin="10,0,0,0" Foreground="AntiqueWhite" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" Text="Customer Management" />
             <Image Margin="0,0,10,0" HorizontalAlignment="Right" Source="/Images/app_icon.png"  />
         </DockPanel>
 
@@ -115,7 +115,7 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="10,0,10,12" FontSize="14" VerticalAlignment="Bottom" Text="Customer Details" Foreground="DarkRed"/>
+                <TextBlock Margin="10,0,10,12" FontSize="14" VerticalAlignment="Center" Text="Customer Input" Foreground="DarkRed"/>
             </StackPanel>
 
             <!-- Customer Details Input -->
@@ -223,9 +223,7 @@
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="1" x:Name="DPOrderDetails" Grid.ColumnSpan="2" Margin="0,27,0,-38">
                         <TextBlock FontSize="16" Margin="10,0" Foreground="DarkRed" Text="Order details" Width="91" />
-                        <Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}">
-                            <Image Source="/Images/popup.png" />
-                        </Button>
+                        <Button Name="BtnToOrderDetails" Click="BtnToOrderDetails_Click" ToolTip="Click to popout order details into a new window." Width="16" Height="16" Style="{StaticResource IconButtonStyle}"/>
                     </DockPanel>
                     <Border BorderBrush="#ddd"  Grid.Row="1" Grid.ColumnSpan="2">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="359,61,0,-322" RenderTransformOrigin="0.5,0.5">
@@ -247,20 +245,8 @@
                                         </Style.Triggers>
                                     </Style>
                                 </StackPanel.Style>
-                                <StackPanel Margin="0,5" Orientation="Horizontal">
-                                    <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
-                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" SelectionChanged="CalcPrice" />
-                                </StackPanel>
+                                
 
-                                <StackPanel Margin="0,5" Orientation="Horizontal">
-                                    <TextBlock Foreground="DarkRed" Text="Payment Status" Style="{StaticResource Label}" />
-                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding PaymentStatus}"/>
-                                </StackPanel>
-
-                                <StackPanel Margin="0,5" Orientation="Horizontal">
-                                    <TextBlock Foreground="DarkRed" Text="Vegetarian" Style="{StaticResource Label}" />
-                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
-                                </StackPanel>
 
 
                                 <StackPanel Margin="0,5" Orientation="Horizontal">
@@ -298,11 +284,27 @@
                                         </DatePicker.Resources>
                                     </DatePicker>
                                 </StackPanel>
-                               
-                                  <StackPanel Margin="0,5" Orientation="Horizontal">
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Text="Meal Type" Style="{StaticResource Label}" Foreground="DarkRed"/>
+                                    <ComboBox Foreground="DarkRed" SelectedItem="{Binding MealType, Converter={StaticResource int2MealType}}" Width="150" Name="CbxMealType" SelectionChanged="CalcPrice" />
+                                </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Vegetarian" Style="{StaticResource Label}" />
+                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding Veg}"/>
+                                </StackPanel>
+                                
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
                                     <TextBlock Foreground="DarkRed" Text="Price" Style="{StaticResource Label}" />
                                     <TextBox Foreground="DarkRed" x:Name="PriceTB" Width="50" Text="{Binding Price}" />
                                 </StackPanel>
+
+                                <StackPanel Margin="0,5" Orientation="Horizontal">
+                                    <TextBlock Foreground="DarkRed" Text="Payment Status" Style="{StaticResource Label}" />
+                                    <CheckBox Foreground="DarkRed" Width="150" IsChecked="{Binding PaymentStatus}"/>
+                                </StackPanel>
+
+                               
 
                             </StackPanel>
                         </ScrollViewer>

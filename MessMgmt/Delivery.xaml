@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MessMgmt"
         mc:Ignorable="d"
-        Title="Delivery" Height="450" Width="800">
+        Title="Delivery" Height="450" Width="850">
 
     <Window.Resources>
         <local:Int2MealType x:Key="int2MealType" />
@@ -15,14 +15,27 @@
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         
         <StackPanel Background="#eee"  Orientation="Horizontal">
             <TextBlock Foreground="DarkRed"  FontWeight="SemiBold"  Margin="10,0" FontSize="18" VerticalAlignment="Center" Text="Order Delivery Details" />
         </StackPanel>
 
-        <Border BorderBrush="#ddd" BorderThickness="0,1" Grid.Row="1">
+        <Border BorderThickness="0,0,0,1" Grid.Row="1">
+            <DockPanel VerticalAlignment="Center" Margin="10,5">
+                <TextBox Width="100" HorizontalAlignment="Left" FontSize="14" VerticalAlignment="Center" Text="Full Name"/>
+                <TextBox Width="100" Margin="20,0,0,0" FontSize="14" Text="Address"/>
+                <TextBox Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Meal Type"/>
+                <TextBox Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Start Date"/>
+                <TextBox Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="End Date"/>
+                 <TextBox Width="100" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center" Text="Price in Euros"/>
+            </DockPanel>
+        </Border>
+
+        <Border BorderBrush="#ddd" BorderThickness="0,1" Grid.Row="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl Name="IcDelivery" ItemsSource="{Binding}">
                     <ItemsControl.ItemTemplate>
@@ -34,8 +47,8 @@
                                     <TextBlock Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="{Binding MealType, Converter={StaticResource int2MealType}}"/>
                                     <TextBlock Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="{Binding StartDate, Converter={StaticResource date2string}}"/>
                                     <TextBlock Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="{Binding EndDate, Converter={StaticResource date2string}}"/>
-                                    <TextBlock Width="100" Margin="50,0,0,0" FontSize="14" VerticalAlignment="Center" Text="{Binding Veg}"/>
-                                    <TextBlock Width="60" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center" Text="{Binding Price }"/>
+                                   
+                                    <TextBlock Width="100" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center" Text="{Binding Price }"/>
                                 </DockPanel>
                             </Border>
                         </DataTemplate>
